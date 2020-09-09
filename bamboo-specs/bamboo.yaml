@@ -1,0 +1,35 @@
+---
+version: 2
+plan:
+  project-key: FCC
+  key: FCC
+  name: freeCodeCamp
+
+stages:
+  - Build:
+      - Build API-Server
+      - Build Static Client
+
+Build API-Server:
+  tasks:
+    - script:
+      - npm install
+      - npm run bootstrap
+      - npm run build:server
+
+      - find api-server -type f | wc -l
+      - du -hs api-server
+      - tar czf api-server.tgz api-server
+      - ls -lah api-server.tgz
+
+Build Static Client:
+  tasks:
+    - script:
+      - npm install
+      - npm run bootstrap
+      - npm run build:client
+
+      - find client/public -type f | wc -l
+      - du -hs client/public
+      - tar czf client-public.tgz client/public
+      - ls -lah client-public.tgz
