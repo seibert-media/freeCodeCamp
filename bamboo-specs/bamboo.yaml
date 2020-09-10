@@ -11,6 +11,8 @@ stages:
       - Build Static Client
 
 Build API-Server:
+  requirements:
+     - Node.js 10
   tasks:
     - script:
       - set -xe
@@ -25,6 +27,8 @@ Build API-Server:
       - ls -lah api-server.tgz
 
 Build Static Client:
+  requirements:
+     - Node.js 10
   tasks:
     - script:
       - set -xe
