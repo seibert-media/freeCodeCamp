@@ -31,6 +31,9 @@ Build API-Server:
         du -hs api-server
         tar czf api-server.tgz api-server
         ls -lah api-server.tgz
+  final-tasks:
+    - clean
+
 
 Build Static Client:
   requirements:
@@ -54,6 +57,9 @@ Build Static Client:
         du -hs client/public
         tar czf client-public.tgz client/public
         ls -lah client-public.tgz
+  final-tasks:
+    - clean
+
 
 ---
 version: 2
@@ -89,3 +95,5 @@ Prod:
         sudo mv htdocs htdocs_old
         sudo mv client-public htdocs
         EOF
+  final-tasks:
+    - clean
