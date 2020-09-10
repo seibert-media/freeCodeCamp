@@ -215,7 +215,7 @@ function isEnglishChallenge(fullPath) {
 }
 
 function isAcceptedLanguage(lang) {
-  const acceptedLanguages = ['english', 'chinese'];
+  const acceptedLanguages = ['english', 'chinese', 'german'];
   return acceptedLanguages.includes(lang);
 }
 
