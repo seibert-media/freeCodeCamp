@@ -18,6 +18,8 @@ Build API-Server:
       location: ${bamboo.working.directory}
       pattern: api-server.tgz
       required: true
+  other:
+    clean-working-dir: true
   tasks:
     - script: |
         set -xe
@@ -31,9 +33,6 @@ Build API-Server:
         du -hs api-server
         tar czf api-server.tgz api-server
         ls -lah api-server.tgz
-  final-tasks:
-    - clean
-
 
 Build Static Client:
   requirements:
@@ -44,6 +43,8 @@ Build Static Client:
       location: ${bamboo.working.directory}
       pattern: client-public.tgz
       required: true
+  other:
+    clean-working-dir: true
   tasks:
     - script: |
         set -xe
@@ -58,9 +59,6 @@ Build Static Client:
         du -hs client/public
         tar czf client-public.tgz client/public
         ls -lah client-public.tgz
-  final-tasks:
-    - clean
-
 
 ---
 version: 2
@@ -96,5 +94,3 @@ Prod:
         sudo mv htdocs htdocs_old
         sudo mv client-public htdocs
         EOF
-  final-tasks:
-    - clean
