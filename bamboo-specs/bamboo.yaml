@@ -27,6 +27,7 @@ Build Static Client:
     - script:
       - npm install
       - npm run bootstrap
+      # somehow get .env
       - npm run build:client
 
       - find client/public -type f | wc -l
