@@ -13,6 +13,11 @@ stages:
 Build API-Server:
   requirements:
      - Node.js 10
+  artifacts:
+    - name: api-server.tgz
+      location: ${bamboo.working.directory}
+      pattern: api-server.tgz
+      required: true
   tasks:
     - script:
       - set -xe
@@ -29,6 +34,11 @@ Build API-Server:
 Build Static Client:
   requirements:
      - Node.js 10
+  artifacts:
+    - name: client-public.tgz
+      location: ${bamboo.working.directory}
+      pattern: client-public.tgz
+      required: true
   tasks:
     - script:
       - set -xe
