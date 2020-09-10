@@ -22,6 +22,7 @@ Build API-Server:
     - script:
       - set -xe
       - export PATH="/opt/node-10/bin/:$PATH"
+
       - npm install
       - npm run bootstrap
       - npm run build:server
@@ -43,9 +44,10 @@ Build Static Client:
     - script:
       - set -xe
       - export PATH="/opt/node-10/bin/:$PATH"
+      - cp frontend.env .env
+
       - npm install
       - npm run bootstrap
-      # somehow get .env
       - npm run build:client
 
       - find client/public -type f | wc -l
