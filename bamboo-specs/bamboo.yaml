@@ -66,7 +66,8 @@ deployment:
   name: freeCodeCamp
   source-plan: FCC-BUILD
 
-release-naming: release-1
+release-naming:
+  next-version-name: build-${bamboo.buildNumber}
 
 environments:
   - Prod
