@@ -13,6 +13,8 @@ stages:
 Build API-Server:
   tasks:
     - script:
+      - set -xe
+      - export PATH="/opt/node-10/bin/:$PATH"
       - npm install
       - npm run bootstrap
       - npm run build:server
@@ -25,6 +27,8 @@ Build API-Server:
 Build Static Client:
   tasks:
     - script:
+      - set -xe
+      - export PATH="/opt/node-10/bin/:$PATH"
       - npm install
       - npm run bootstrap
       # somehow get .env
