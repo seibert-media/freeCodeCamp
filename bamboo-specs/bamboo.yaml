@@ -2,7 +2,7 @@
 version: 2
 plan:
   project-key: FCC
-  key: FCC
+  key: BUILD
   name: freeCodeCamp
 
 stages:
@@ -19,18 +19,18 @@ Build API-Server:
       pattern: api-server.tgz
       required: true
   tasks:
-    - script:
-      - set -xe
-      - export PATH="/opt/node-10/bin/:$PATH"
+    - script: |
+        set -xe
+        export PATH="/opt/node-10/bin/:$PATH"
 
-      - npm install
-      - npm run bootstrap
-      - npm run build:server
+        npm install
+        npm run bootstrap
+        npm run build:server
 
-      - find api-server -type f | wc -l
-      - du -hs api-server
-      - tar czf api-server.tgz api-server
-      - ls -lah api-server.tgz
+        find api-server -type f | wc -l
+        du -hs api-server
+        tar czf api-server.tgz api-server
+        ls -lah api-server.tgz
 
 Build Static Client:
   requirements:
@@ -41,16 +41,51 @@ Build Static Client:
       pattern: client-public.tgz
       required: true
   tasks:
-    - script:
-      - set -xe
-      - export PATH="/opt/node-10/bin/:$PATH"
-      - cp frontend.env .env
+    - script: |
+        set -xe
+        export PATH="/opt/node-10/bin/:$PATH"
+        cp frontend.env .env
 
-      - npm install
-      - npm run bootstrap
-      - npm run build:client
+        npm install
+        npm run bootstrap
+        npm run build:client
 
-      - find client/public -type f | wc -l
-      - du -hs client/public
-      - tar czf client-public.tgz client/public
-      - ls -lah client-public.tgz
+        find client/public -type f | wc -l
+        du -hs client/public
+        tar czf client-public.tgz client/public
+        ls -lah client-public.tgz
+
+---
+version: 2
+deployment:
+  name: freeCodeCamp
+  source-plan: FCC-BUILD
+
+release-naming: release-1
+
+environments:
+  - Prod
+
+Prod:
+  triggers:
+    - stage-success: Build
+  tasks:
+    - clean
+    - artifact-download
+    - script: |
+        set -ex
+        touch .autobamboo.priv
+        chmod 600 .autobamboo.priv
+        echo $bamboo_deplyoment_secret_autobamboo_privkey_base64 | base64 -d > .autobamboo.priv
+
+        echo "scp'ing bundle to target"
+        scp -i .autobamboo.priv client-public.tgz autobamboo@10.32.1.24:client-public.tgz
+
+        ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@timetracker-test.smedia.pb-3.smhss.de <<EOF
+        set -ex
+        cd /var/www/freecodecamp/
+        sudo tar xvzf /home/autobamboo/client-public.tgz
+        sudo rm -rf htdocs_old
+        sudo mv htdocs htdocs_old
+        sudo mv client-public htdocs
+        EOF
