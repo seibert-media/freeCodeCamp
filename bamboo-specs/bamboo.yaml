@@ -38,6 +38,7 @@ Build API-Server:
 Build Static Client:
   requirements:
      - Node.js 10
+     - demanding-builds
   artifacts:
     - name: client-public.tgz
       location: ${bamboo.working.directory}
