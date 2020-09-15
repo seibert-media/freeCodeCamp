@@ -85,13 +85,13 @@ Prod:
         echo $bamboo_deplyoment_secret_autobamboo_privkey_base64 | base64 -d > .autobamboo.priv
 
         echo "scp'ing bundle to target"
-        scp -i .autobamboo.priv client-public.tgz autobamboo@10.32.1.24:client-public.tgz
+        scp -oStrictHostKeyChecking=no -i .autobamboo.priv client-public.tgz autobamboo@10.32.1.24:client-public.tgz
 
-        ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@timetracker-test.smedia.pb-3.smhss.de <<EOF
+        ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
         set -ex
+        tar xvzf client-public.tgz
         cd /var/www/freecodecamp/
-        sudo tar xvzf /home/autobamboo/client-public.tgz
-        sudo rm -rf htdocs_old
-        sudo mv htdocs htdocs_old
-        sudo mv client-public htdocs
+        rm -rf htdocs_old
+        mv htdocs htdocs_old
+        mv /home/autobamboo/client/public htdocs
         EOF
