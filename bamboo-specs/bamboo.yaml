@@ -14,9 +14,9 @@ Build API-Server:
   requirements:
      - Node.js 10
   artifacts:
-    - name: api-server.tgz
+    - name: api-server-bundle.tgz
       location: ${bamboo.working.directory}
-      pattern: api-server.tgz
+      pattern: api-server-bundle.tgz
       required: true
   other:
     clean-working-dir: true
