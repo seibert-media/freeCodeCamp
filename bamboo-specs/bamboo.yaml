@@ -92,7 +92,7 @@ Prod:
         set -ex
         tar xvzf client-public.tgz
         sudo chown -R autobamboo:root client
-        sudo chmod -R 755 client
+        sudo chmod -R 0755 client
         cd /var/www/freecodecamp/
         rm -rf htdocs_old
         mv htdocs htdocs_old || true
