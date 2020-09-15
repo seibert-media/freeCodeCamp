@@ -31,8 +31,8 @@ Build API-Server:
 
         find api-server -type f | wc -l
         du -hs api-server
-        tar czf api-server.tgz api-server
-        ls -lah api-server.tgz
+        tar czf api-server-bundle.tgz node_modules config tools api-server
+        ls -lah api-server-bundle.tgz
 
 Build Static Client:
   requirements:
@@ -104,9 +104,13 @@ Prod:
 
         ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
         set -ex
-        tar xvzf api-server.tgz
+        rm -rf api-server-bundle
+        mkdir api-server-bundle
+        cd api-server-bundle
+        tar xvzf ../api-server.tgz
+
         cd /opt/freecodecamp/
-        rm -rf api-server_old
-        mv api-server api-server_old || true
-        mv /home/autobamboo/api-server api-server
+        rm -rf api-server-bundle_old
+        mv api-server-bundle api-server-bundle_old || true
+        mv /home/autobamboo/api-server-bundle api-server-bundle
         EOF
