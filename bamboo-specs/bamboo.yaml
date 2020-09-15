@@ -83,8 +83,9 @@ Prod:
         touch .autobamboo.priv
         chmod 600 .autobamboo.priv
         echo $bamboo_deplyoment_secret_autobamboo_privkey_base64 | base64 -d > .autobamboo.priv
-
-        echo "scp'ing bundle to target"
+    - script: |
+        set -ex
+        echo "scp'ing client-public.tgz to target"
         scp -oStrictHostKeyChecking=no -i .autobamboo.priv client-public.tgz autobamboo@10.32.1.24:client-public.tgz
 
         ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
@@ -92,6 +93,20 @@ Prod:
         tar xvzf client-public.tgz
         cd /var/www/freecodecamp/
         rm -rf htdocs_old
-        mv htdocs htdocs_old
+        mv htdocs htdocs_old || true
         mv /home/autobamboo/client/public htdocs
+        rmdir /home/autobamboo/client
+        EOF
+    - script: |
+        set -ex
+        echo "scp'ing api-server.tgz to target"
+        scp -oStrictHostKeyChecking=no -i .autobamboo.priv api-server.tgz autobamboo@10.32.1.24:api-server.tgz
+
+        ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
+        set -ex
+        tar xvzf api-server.tgz
+        cd /opt/freecodecamp/
+        rm -rf api-server_old
+        mv api-server api-server_old || true
+        mv /home/autobamboo/api-server api-server
         EOF
