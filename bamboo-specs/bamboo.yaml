@@ -31,7 +31,7 @@ Build API-Server:
 
         find api-server -type f | wc -l
         du -hs api-server
-        tar czf api-server-bundle.tgz node_modules config tools api-server
+        tar czf api-server-bundle.tgz node_modules config tools utils curriculum api-server
         ls -lah api-server-bundle.tgz
 
 Build Static Client:
@@ -91,6 +91,8 @@ Prod:
         ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
         set -ex
         tar xvzf client-public.tgz
+        sudo chown -R autobamboo:root client
+        sudo chmod -R 755 client
         cd /var/www/freecodecamp/
         rm -rf htdocs_old
         mv htdocs htdocs_old || true
@@ -107,7 +109,7 @@ Prod:
         rm -rf api-server-bundle
         mkdir api-server-bundle
         cd api-server-bundle
-        tar xvzf ../api-server.tgz
+        tar xvzf ../api-server-bundle.tgz
 
         cd /opt/freecodecamp/
         rm -rf api-server-bundle_old
