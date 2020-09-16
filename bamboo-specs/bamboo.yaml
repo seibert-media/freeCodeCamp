@@ -29,9 +29,8 @@ Build API-Server:
         npm run bootstrap
         npm run build:server
 
-        find api-server -type f | wc -l
-        du -hs api-server
-        tar czf api-server-bundle.tgz node_modules config tools utils curriculum api-server
+        ls -la
+        tar czvf api-server-bundle.tgz node_modules config tools utils curriculum api-server
         ls -lah api-server-bundle.tgz
 
 Build Static Client:
@@ -57,7 +56,7 @@ Build Static Client:
 
         find client/public -type f | wc -l
         du -hs client/public
-        tar czf client-public.tgz client/public
+        tar czvf client-public.tgz client/public
         ls -lah client-public.tgz
 
 ---
