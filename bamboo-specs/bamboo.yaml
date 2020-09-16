@@ -101,8 +101,8 @@ Prod:
         EOF
     - script: |
         set -ex
-        echo "scp'ing api-server.tgz to target"
-        scp -oStrictHostKeyChecking=no -i .autobamboo.priv api-server.tgz autobamboo@10.32.1.24:api-server.tgz
+        echo "scp'ing api-server-bundle.tgz to target"
+        scp -oStrictHostKeyChecking=no -i .autobamboo.priv api-server-bundle.tgz autobamboo@10.32.1.24:api-server-bundle.tgz
 
         ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
         set -ex
