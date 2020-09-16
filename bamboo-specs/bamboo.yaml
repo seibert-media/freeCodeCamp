@@ -111,8 +111,17 @@ Prod:
         cd api-server-bundle
         tar xvzf ../api-server-bundle.tgz
 
+        sudo systemctl stop freecodecamp-api-server.service
+
         cd /opt/freecodecamp/
         rm -rf api-server-bundle_old
         mv api-server-bundle api-server-bundle_old || true
         mv /home/autobamboo/api-server-bundle api-server-bundle
+
+        sudo systemctl start freecodecamp-api-server.service
+
+        echo "waiting for api-server to start up"
+        timeout 300 bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:3000)" != "302" ]]; do echo -n '.'; sleep 5; done' || false
+        echo "api-server is up \o/"
+
         EOF
