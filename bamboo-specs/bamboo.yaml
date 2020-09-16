@@ -30,7 +30,7 @@ Build API-Server:
         npm run build:server
 
         ls -la
-        tar czvf api-server-bundle.tgz node_modules config tools utils curriculum api-server
+        tar czf api-server-bundle.tgz node_modules config tools utils curriculum api-server
         ls -lah api-server-bundle.tgz
 
 Build Static Client:
@@ -56,7 +56,7 @@ Build Static Client:
 
         find client/public -type f | wc -l
         du -hs client/public
-        tar czvf client-public.tgz client/public
+        tar czf client-public.tgz client/public
         ls -lah client-public.tgz
 
 ---
@@ -89,7 +89,7 @@ Prod:
 
         ssh -oStrictHostKeyChecking=no -i .autobamboo.priv autobamboo@10.32.1.24 <<EOF
         set -ex
-        tar xvzf client-public.tgz
+        tar xzf client-public.tgz
         sudo chown -R autobamboo:root client
         sudo chmod -R 0755 client
         cd /var/www/freecodecamp/
@@ -108,7 +108,7 @@ Prod:
         rm -rf api-server-bundle
         mkdir api-server-bundle
         cd api-server-bundle
-        tar xvzf ../api-server-bundle.tgz
+        tar xzf ../api-server-bundle.tgz
 
         sudo systemctl stop freecodecamp-api-server.service
 
